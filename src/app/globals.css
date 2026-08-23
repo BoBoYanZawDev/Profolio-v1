@@ -1,26 +1,132 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Primary */
+  --accent: #3b82f6;
+
+  /* Hover */
+  --accent-hover: #60a5fa;
+
+  /* Dark / Active */
+  --accent-active: #2563eb;
+
+  /* Glow */
+  --accent-glow: rgba(59, 130, 246, 0.3);
+
+  /* Very subtle background */
+  --accent-bg: rgba(59, 130, 246, 0.08);
+
+  /* Border */
+  --accent-border: rgba(59, 130, 246, 0.45);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@theme {
+  --color-ink: #06060b;
+  --color-panel: #0d0d16;
+  --color-panel2: #12121e;
+  --color-line: rgba(242, 239, 233, 0.1);
+  --color-cream: #f2efe9;
+  --color-muted: #8b8b9e;
+  --color-accent: #3b82f6;
+  --color-accent2: #60a5fa;
+  --color-lime: #3b82f6;
+  --color-lime-bright: #60a5fa;
+  --color-red: #ff4d5e;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  --font-display: var(--font-syne), sans-serif;
+  --font-sans: var(--font-space), sans-serif;
+  --font-mono: var(--font-jetbrains), monospace;
+
+  --animate-marquee: marquee 28s linear infinite;
+  --animate-marquee-rev: marquee-rev 28s linear infinite;
+  --animate-spin-slow: spin 14s linear infinite;
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes marquee-rev {
+    from { transform: translateX(-50%); }
+    to { transform: translateX(0); }
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
   }
 }
 
+html {
+  scroll-behavior: auto;
+}
+
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-ink);
+  color: var(--color-cream);
+  font-family: var(--font-sans);
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--color-lime);
+  color: #f2efe9;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #06060b;
+}
+::-webkit-scrollbar-thumb {
+  background: #26263a;
+  border-radius: 99px;
+  border: 2px solid #06060b;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent);
+}
+
+/* ---------- custom utilities ---------- */
+
+.text-stroke {
+  -webkit-text-stroke: 1.5px rgba(242, 239, 233, 0.28);
+  color: transparent;
+}
+
+.text-stroke-lime {
+  -webkit-text-stroke: 1.5px rgba(59, 130, 246, 0.55);
+  color: transparent;
+}
+
+.glass {
+  background: rgba(18, 18, 30, 0.55);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(242, 239, 233, 0.08);
+}
+
+.underline-input {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid rgba(242, 239, 233, 0.18);
+  padding: 0.9rem 0.25rem;
+  width: 100%;
+  color: var(--color-cream);
+  outline: none;
+  transition: border-color 0.3s;
+  border-radius: 0;
+  font-size: 1rem;
+}
+.underline-input::placeholder {
+  color: #5a5a70;
+}
+.underline-input:focus {
+  border-color: var(--color-lime);
 }

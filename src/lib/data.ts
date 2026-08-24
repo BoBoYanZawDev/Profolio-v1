@@ -7,7 +7,12 @@ export const SITE = {
   phone: "09 776 764 422",
   location: "Pyinmana, Myanmar",
   timezone: "(GMT+6:30)",
-  socials: [{ label: "GitHub", url: "https://github.com/BoBoYanZawDev" }],
+  socials: [
+    { label: "GitHub", url: "https://github.com/BoBoYanZawDev" },
+    { label: "LinkedIn", url: "https://www.linkedin.com/in/boboyanzaw-54b469301" },
+    // { label: "Facebook", url: "https://facebook.com/boboyanzaw" },
+    // { label: "Instagram", url: "https://instagram.com/boboyanzaw" },
+  ],
   about: [
     "My journey in web development began as a hobby and evolved into a professional career driven by a passion for building high-quality web applications. I'm a Full Stack Web Developer with 2+ years of professional experience developing and maintaining production applications with PHP, Laravel, React, JavaScript, jQuery and MySQL.",
     "At Linn IT Solutions I build the software businesses run on every day — CRM, Service Management (Mini ERP), HRM, administration portals and more. I design RESTful APIs, integrate third-party services such as payments, notifications and cloud storage, and optimize database queries until they fly.",

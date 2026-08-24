@@ -259,11 +259,11 @@ export default function Contact() {
                 type="submit"
                 disabled={status === "sending"}
 
-                className="group relative flex w-full items-center justify-center gap-3 overflow-hidden rounded-xl bg-lime py-4 font-mono text-sm font-medium uppercase tracking-widest text-ink transition-all duration-300 hover:bg-[var(--accent-hover)] hover:shadow-[0_10px_40px_-10px_var(--accent-glow)] disabled:opacity-60 disabled:hover:shadow-none"
+                className="liquid-glass-accent group relative flex w-full items-center justify-center gap-3 overflow-hidden rounded-xl py-4 font-mono text-sm font-medium uppercase tracking-widest text-cream transition-all duration-300 hover:brightness-110 disabled:opacity-60"
               >
                 {status === "sending" ? (
                   <>
-                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-ink/30 border-t-ink" />
+                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-cream/30 border-t-cream" />
                     Sending…
                   </>
                 ) : status === "success" ? (

@@ -28,7 +28,7 @@ export default function Footer() {
         </button>
       </div>
       <p className="pb-8 text-center font-mono text-[11px] uppercase tracking-widest text-muted/60">
-        © {new Date().getFullYear()} {SITE.name} — Built with Next.js · GSAP · Three.js · Prisma
+        © {new Date().getFullYear()} {SITE.name}
       </p>
     </footer>
   );

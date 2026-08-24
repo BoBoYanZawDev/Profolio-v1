@@ -72,10 +72,36 @@ function sliceLine(tokens: Token[], count: number): Token[] {
 }
 
 const BADGES = [
-  { label: "React", color: "#61dafb", pos: "-left-4 top-10 lg:-left-10", delay: 0 },
-  { label: "Laravel", color: "#ff2d20", pos: "-right-3 top-24 lg:-right-8", delay: 0.7 },
-  { label: "PHP", color: "#8892bf", pos: "-left-3 bottom-20 lg:-left-8", delay: 1.3 },
-  { label: "MySQL", color: "#4479a1", pos: "-right-2 bottom-8 lg:-right-6", delay: 1.9 },
+  {
+    label: "React",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg",
+    pos: "-left-4 top-10 lg:-left-10",
+    delay: 0,
+  },
+  {
+    label: "Laravel",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg",
+    pos: "-right-3 top-24 lg:-right-8",
+    delay: 0.7,
+  },
+  {
+    label: "PHP",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg",
+    pos: "-left-3 bottom-20 lg:-left-8",
+    delay: 1.3,
+  },
+  {
+    label: "TypeScript",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg",
+    pos: "-right-3 top-1/2 lg:-right-8",
+    delay: 2.4,
+  },
+  {
+    label: "JavaScript",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg",
+    pos: "-right-2 bottom-8 lg:-right-6",
+    delay: 1.9,
+  },
 ];
 
 export default function Hero() {
@@ -121,10 +147,17 @@ export default function Hero() {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
       tl.fromTo(
-        ".hl-line > span",
-        { yPercent: 120, rotate: 3 },
-        { yPercent: 0, rotate: 0, duration: 1, stagger: 0.11 },
-        0.15
+        ".hl-char",
+        { yPercent: 130, rotate: 10, opacity: 0 },
+        {
+          yPercent: 0,
+          rotate: 0,
+          opacity: 1,
+          duration: 1,
+          ease: "back.out(1.7)",
+          stagger: 0.045,
+        },
+        0.2
       )
         .fromTo(
           ".hero-el",
@@ -205,13 +238,26 @@ export default function Hero() {
             {"// hi, I'm Bo Bo Yan Zaw"}
           </p>
 
-          <h1 className="font-display text-[clamp(3rem,8.5vw,6.5rem)] font-extrabold leading-[0.98] tracking-tight">
+          <h1 className="font-display text-[clamp(2.4rem,7.2vw,5.8rem)] font-extrabold leading-[1.02] tracking-tight">
             <span className="block overflow-hidden pb-1 hl-line">
-              <span>FULL—STACK</span>
+              <span className="whitespace-nowrap">
+                {"FULL—STACK".split("").map((c, i) => (
+                  <span key={i} className="hl-char inline-block will-change-transform">
+                    {c}
+                  </span>
+                ))}
+              </span>
             </span>
             <span className="block overflow-hidden pb-2 hl-line">
-              <span>
-                <span className="text-stroke">DEVELOPER</span>
+              <span className="whitespace-nowrap">
+                {"DEVELOPER".split("").map((c, i) => (
+                  <span
+                    key={i}
+                    className="hl-char hl-char-outline inline-block will-change-transform"
+                  >
+                    {c}
+                  </span>
+                ))}
                 <span className="text-lime-bright">.</span>
               </span>
             </span>
@@ -229,7 +275,7 @@ export default function Hero() {
               <a
                 href="#work"
 
-                className="group inline-flex items-center gap-2 rounded-full bg-lime px-7 py-3.5 font-mono text-sm font-medium uppercase tracking-widest text-ink"
+                className="liquid-glass-accent group inline-flex items-center gap-2 rounded-full px-7 py-3.5 font-mono text-sm font-medium uppercase tracking-widest text-cream transition-all duration-300 hover:brightness-125"
               >
                 View My Work
                 <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
@@ -239,7 +285,7 @@ export default function Hero() {
               <a
                 href="#contact"
 
-                className="rounded-full border border-line px-7 py-3.5 font-mono text-sm uppercase tracking-widest transition-colors hover:border-lime hover:text-lime-bright"
+                className="liquid-glass rounded-full px-7 py-3.5 font-mono text-sm uppercase tracking-widest text-cream transition-all duration-300 hover:brightness-125"
               >
                 Get In Touch
               </a>
@@ -306,7 +352,8 @@ export default function Hero() {
               key={b.label}
               className={`float-badge badge-${b.label} absolute ${b.pos} hidden items-center gap-2 rounded-full border border-line bg-ink/85 px-4 py-2 font-mono text-xs uppercase tracking-widest backdrop-blur sm:flex`}
             >
-              <span className="h-2 w-2 rounded-full" style={{ background: b.color }} />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={b.icon} alt="" className="h-4 w-4" loading="lazy" />
               {b.label}
             </span>
           ))}

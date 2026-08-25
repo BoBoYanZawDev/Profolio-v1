@@ -1,4 +1,5 @@
 export const SITE = {
+  url: "https://boboyanzaw.vercel.app",
   name: "Bo Bo Yan Zaw",
   role: "Full-Stack Web Developer",
   tagline:

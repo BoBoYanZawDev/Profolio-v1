@@ -301,9 +301,9 @@ export default function Contact() {
                 </div>
               )}
 
-              <p className="text-center font-mono text-[10px] uppercase tracking-widest text-muted/60">
+              {/* <p className="text-center font-mono text-[10px] uppercase tracking-widest text-muted/60">
                 Stored securely · No spam, ever
-              </p>
+              </p> */}
             </div>
           </form>
         </div>

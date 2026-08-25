@@ -31,6 +31,28 @@ export async function POST(req: Request) {
       select: { id: true },
     });
 
+    // forward to Telegram (never fails the form if Telegram is down/misconfigured)
+    const botToken = process.env.TELEGRAM_BOT_TOKEN;
+    const chatId = process.env.TELEGRAM_CHAT_ID;
+    if (botToken && chatId) {
+      const text =
+        `📩 New message from portfolio\n\n` +
+        `👤 Name: ${name}\n` +
+        `📧 Email: ${email}\n` +
+        `📌 Subject: ${subject || "—"}\n\n` +
+        `${message}`;
+      try {
+        await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ chat_id: chatId, text }),
+          signal: AbortSignal.timeout(8000),
+        });
+      } catch {
+        /* telegram failure is ignored — message is already saved in DB */
+      }
+    }
+
     return NextResponse.json({ ok: true, id: saved.id }, { status: 201 });
   } catch {
     return NextResponse.json(

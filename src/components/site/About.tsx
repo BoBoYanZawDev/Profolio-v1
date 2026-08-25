@@ -59,7 +59,7 @@ export default function About() {
               {p}
             </p>
           ))}
-          <div className="about-para flex flex-wrap gap-3 pt-2">
+          <div className="about-para flex flex-wrap items-center gap-3 pt-2">
             {["React", "Laravel", "PHP", "MySQL"].map((t) => (
               <span
                 key={t}
@@ -68,6 +68,20 @@ export default function About() {
                 {t}
               </span>
             ))}
+          </div>
+          <div className="about-para pt-3">
+            <a
+              href="/BoBoYanZaw_Resume.pdf"
+              download="BoBoYanZaw_Resume.pdf"
+              className="inline-flex items-center gap-2 rounded-full border border-lime/40 px-5 py-2.5 font-mono text-xs uppercase tracking-widest text-lime-bright transition-colors duration-300 hover:bg-lime hover:text-ink"
+            >
+              Download Resume (PDF)
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
+            </a>
           </div>
         </div>
 

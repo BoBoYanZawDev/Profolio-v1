@@ -107,9 +107,16 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* right — socials + mobile toggle */}
+          {/* right — CV + socials + mobile toggle */}
           <div className="flex items-center gap-5">
             <div className="hidden items-center gap-5 md:flex">
+              {/* <a
+                href="/BoBoYanZaw_Resume.pdf"
+                download="BoBoYanZaw_Resume.pdf"
+                className="rounded-full border border-line px-4 py-1.5 font-mono text-[11px] uppercase tracking-widest text-cream/80 transition-colors duration-300 hover:border-lime hover:text-lime-bright"
+              >
+                Resume ↓
+              </a> */}
               {SITE.socials.map((s) => (
                 <a
                   key={s.label}
@@ -170,6 +177,13 @@ export default function Navbar() {
           <p className="menu-meta font-mono text-xs uppercase tracking-widest text-ink/70">
             {SITE.location}
           </p>
+          <a
+            href="/BoBoYanZaw_Resume.pdf"
+            download="BoBoYanZaw_Resume.pdf"
+            className="menu-meta inline-block font-mono text-xs uppercase tracking-widest text-ink underline"
+          >
+            Download CV ↓
+          </a>
           <Link
             href="/admin/login"
             onClick={closeMenu}

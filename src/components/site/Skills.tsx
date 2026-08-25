@@ -13,7 +13,7 @@ const TECH_STACK = [
   { label: "MySQL", icon: "/tech_icon/mysql.png", colors: "#5eead4,#2dd4bf,#0d9488" },
   { label: "TypeScript", icon: "/tech_icon/typescript.png", colors: "#93c5fd,#3b82f6,#1d4ed8" },
   { label: "JavaScript", icon: "/tech_icon/javascript.png", colors: "#fde047,#facc15,#eab308" },
-  { label: "Next.js", icon: "/tech_icon/next.png", colors: "#e5e7eb,#9ca3af,#4b5563" },
+  // { label: "Next.js", icon: "/tech_icon/next.png", colors: "#e5e7eb,#9ca3af,#4b5563" },
   { label: "Vue", icon: "/tech_icon/vue.png", colors: "#86efac,#4ade80,#16a34a" },
   { label: "Tailwind CSS", icon: "/tech_icon/tailwind.png", colors: "#7dd3fc,#38bdf8,#0284c7" },
   { label: "jQuery", icon: "/tech_icon/jquery.png", colors: "#93c5fd,#60a5fa,#2563eb" },
@@ -21,7 +21,7 @@ const TECH_STACK = [
   { label: "Vite", icon: "/tech_icon/vite.png", colors: "#c4b5fd,#fde047,#a78bfa" },
   { label: "Bootstrap", icon: "/tech_icon/bootstrap.png", colors: "#c4b5fd,#818cf8,#6366f1" },
   { label: "Express", icon: "/tech_icon/express.png", colors: "#e5e7eb,#d1d5db,#9ca3af" },
-  { label: "PostgreSQL", icon: "/tech_icon/postgre.png", colors: "#7dd3fc,#38bdf8,#0369a1" },
+  // { label: "PostgreSQL", icon: "/tech_icon/postgre.png", colors: "#7dd3fc,#38bdf8,#0369a1" },
   { label: "Ubuntu", icon: "/tech_icon/ubantu.png", colors: "#fdba74,#fb923c,#c2410c" },
 ];
 

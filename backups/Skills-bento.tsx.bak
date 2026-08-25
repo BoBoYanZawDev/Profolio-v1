@@ -1,0 +1,227 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import SectionHeading from "./SectionHeading";
+import { SKILLS } from "@/lib/data";
+
+const DEVICON = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons";
+
+const CORE_STACK = [
+  { label: "React", icon: `${DEVICON}/react/react-original.svg` },
+  { label: "Laravel", icon: `${DEVICON}/laravel/laravel-original.svg` },
+  { label: "PHP", icon: `${DEVICON}/php/php-original.svg` },
+  { label: "MySQL", icon: `${DEVICON}/mysql/mysql-original.svg` },
+  { label: "TypeScript", icon: `${DEVICON}/typescript/typescript-original.svg` },
+  { label: "JavaScript", icon: `${DEVICON}/javascript/javascript-original.svg` },
+];
+
+const TERMINAL_LINES = [
+  { type: "cmd", text: "whoami" },
+  { type: "out", text: "bo-bo-yan-zaw — full-stack web developer" },
+  { type: "cmd", text: "cat stack.txt" },
+  { type: "out", text: "php · laravel · react · javascript · mysql" },
+  { type: "cmd", text: "./deploy.sh --prod" },
+  { type: "ok", text: "✔ built in 3.2s — deployed to linux server" },
+  { type: "cmd", text: "status" },
+  { type: "ok", text: "● open to work — replies within 24h" },
+];
+
+const EXTRA_TOOLS = [
+  "Vue",
+  "jQuery",
+  "Tailwind CSS",
+  "Git & GitHub",
+  "Nginx",
+  "Supervisor",
+  "Cron Jobs",
+  "REST APIs",
+];
+
+export default function Skills() {
+  const ref = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        ".skill-tile",
+        { opacity: 0, y: 60 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: "power3.out",
+          scrollTrigger: { trigger: ref.current, start: "top 75%" },
+        }
+      );
+      gsap.fromTo(
+        ".core-icon",
+        { opacity: 0, y: 24, scale: 0.8 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.5,
+          ease: "back.out(1.8)",
+          stagger: 0.08,
+          scrollTrigger: { trigger: ".core-grid", start: "top 82%" },
+        }
+      );
+      gsap.fromTo(
+        ".skill-chip",
+        { opacity: 0, scale: 0.6 },
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 0.4,
+          ease: "back.out(2)",
+          stagger: { each: 0.045 },
+          scrollTrigger: { trigger: ref.current, start: "top 55%" },
+        }
+      );
+      gsap.fromTo(
+        ".term-line",
+        { opacity: 0, x: -18 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 0.4,
+          stagger: 0.22,
+          ease: "power2.out",
+          scrollTrigger: { trigger: ".term-body", start: "top 80%" },
+        }
+      );
+    }, ref);
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section id="skills" ref={ref} className="relative bg-panel py-28 md:py-40">
+      <div className="mx-auto max-w-7xl px-5 md:px-10">
+        <SectionHeading
+          kicker="02 — My Toolbox"
+          title="SKILLS & STACK"
+          accent="STACK"
+        />
+
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+          {/* core stack — big icon wall */}
+          <div className="skill-tile relative overflow-hidden rounded-2xl border border-line bg-panel2 p-6 md:col-span-2 lg:row-span-2">
+            <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-lime via-accent to-accent2" />
+            <h3 className="font-display text-2xl font-bold">Daily Drivers</h3>
+            <p className="mt-1 font-mono text-xs uppercase tracking-widest text-muted">
+              / the core six
+            </p>
+            <div className="core-grid mt-7 grid grid-cols-2 gap-3 sm:grid-cols-3">
+              {CORE_STACK.map((t) => (
+                <div
+                  key={t.label}
+                  className="core-icon flex flex-col items-center gap-3 rounded-xl border border-line bg-ink/50 px-3 py-6 transition-all duration-300 hover:-translate-y-1 hover:border-lime/50 hover:shadow-[0_12px_32px_-12px_var(--accent-glow)]"
+
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={t.icon} alt={t.label} className="h-10 w-10" loading="lazy" />
+                  <span className="font-mono text-[11px] uppercase tracking-widest text-cream/80">
+                    {t.label}
+                  </span>
+                </div>
+              ))}
+            </div>
+            <p className="mt-6 leading-relaxed text-muted">
+              The technologies I reach for first — battle-tested on real
+              production systems, not just tutorials.
+            </p>
+          </div>
+
+          {/* category tiles */}
+          {SKILLS.map((group) => (
+            <div
+              key={group.group}
+              className="skill-tile group relative overflow-hidden rounded-2xl border border-line bg-panel2 p-6 transition-colors duration-500 hover:border-transparent"
+
+            >
+              <div
+                className="absolute inset-x-0 top-0 h-1 opacity-80"
+                style={{ background: group.accent }}
+              />
+              <div
+                className="pointer-events-none absolute -right-16 -top-16 h-44 w-44 rounded-full opacity-[0.07] blur-2xl transition-opacity duration-500 group-hover:opacity-20"
+                style={{ background: group.accent }}
+              />
+              <h3 className="font-display text-xl font-bold">{group.group}</h3>
+              <p className="mt-1 font-mono text-[11px] uppercase tracking-widest text-muted">
+                / {group.items.length} tools
+              </p>
+              <ul className="mt-6 flex flex-wrap gap-2.5">
+                {group.items.map((item) => (
+                  <li
+                    key={item}
+                    className="skill-chip rounded-full border border-line px-3.5 py-1.5 text-sm text-cream/85 transition-colors duration-300 hover:border-lime hover:text-lime-bright"
+                  >
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+
+          {/* terminal tile */}
+          <div className="skill-tile overflow-hidden rounded-2xl border border-line bg-ink/70 md:col-span-2">
+            <div className="flex items-center gap-2 border-b border-line px-4 py-3">
+              <span className="h-3 w-3 rounded-full bg-red/80" />
+              <span className="h-3 w-3 rounded-full bg-[#f5bf4f]/80" />
+              <span className="h-3 w-3 rounded-full bg-lime/80" />
+              <span className="ml-3 font-mono text-xs text-cream/70">
+                zsh — stack
+              </span>
+            </div>
+            <div className="term-body space-y-2.5 p-5 font-mono text-[12.5px] leading-6 md:p-6">
+              {TERMINAL_LINES.map((line, i) => (
+                <p key={i} className="term-line flex gap-2">
+                  {line.type === "cmd" ? (
+                    <>
+                      <span className="shrink-0 text-lime-bright">$</span>
+                      <span className="text-cream/90">{line.text}</span>
+                    </>
+                  ) : line.type === "ok" ? (
+                    <span className="text-lime-bright">{line.text}</span>
+                  ) : (
+                    <span className="text-muted">{line.text}</span>
+                  )}
+                </p>
+              ))}
+              <p className="term-line flex gap-2">
+                <span className="text-lime-bright">$</span>
+                <span className="inline-block h-4 w-2 animate-pulse bg-lime align-middle" />
+              </p>
+            </div>
+          </div>
+
+          {/* extra tools */}
+          <div className="skill-tile relative overflow-hidden rounded-2xl border border-line bg-panel2 p-6 md:col-span-2">
+            <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-accent2 to-lime" />
+            <h3 className="font-display text-xl font-bold">
+              Also in the toolbox
+            </h3>
+            <p className="mt-1 font-mono text-[11px] uppercase tracking-widest text-muted">
+              / picked up along the way
+            </p>
+            <ul className="mt-6 flex flex-wrap gap-2.5">
+              {EXTRA_TOOLS.map((item) => (
+                <li
+                  key={item}
+                  className="skill-chip rounded-full border border-line px-3.5 py-1.5 text-sm text-cream/85 transition-colors duration-300 hover:border-lime hover:text-lime-bright"
+                >
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

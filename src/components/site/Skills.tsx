@@ -4,7 +4,26 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SectionHeading from "./SectionHeading";
-import { SKILLS } from "@/lib/data";
+import PixelCard from "@/components/PixelCard";
+
+const TECH_STACK = [
+  { label: "React", icon: "/tech_icon/react.png", colors: "#67e8f9,#38bdf8,#0ea5e9" },
+  { label: "Laravel", icon: "/tech_icon/laravel.png", colors: "#fda4af,#fb7185,#e11d48" },
+  { label: "PHP", icon: "/tech_icon/php.png", colors: "#c4b5fd,#a78bfa,#7c3aed" },
+  { label: "MySQL", icon: "/tech_icon/mysql.png", colors: "#5eead4,#2dd4bf,#0d9488" },
+  { label: "TypeScript", icon: "/tech_icon/typescript.png", colors: "#93c5fd,#3b82f6,#1d4ed8" },
+  { label: "JavaScript", icon: "/tech_icon/javascript.png", colors: "#fde047,#facc15,#eab308" },
+  { label: "Next.js", icon: "/tech_icon/next.png", colors: "#e5e7eb,#9ca3af,#4b5563" },
+  { label: "Vue", icon: "/tech_icon/vue.png", colors: "#86efac,#4ade80,#16a34a" },
+  { label: "Tailwind CSS", icon: "/tech_icon/tailwind.png", colors: "#7dd3fc,#38bdf8,#0284c7" },
+  { label: "jQuery", icon: "/tech_icon/jquery.png", colors: "#93c5fd,#60a5fa,#2563eb" },
+  { label: "Git & GitHub", icon: "/tech_icon/git.png", colors: "#fdba74,#fb923c,#ea580c" },
+  { label: "Vite", icon: "/tech_icon/vite.png", colors: "#c4b5fd,#fde047,#a78bfa" },
+  { label: "Bootstrap", icon: "/tech_icon/bootstrap.png", colors: "#c4b5fd,#818cf8,#6366f1" },
+  { label: "Express", icon: "/tech_icon/express.png", colors: "#e5e7eb,#d1d5db,#9ca3af" },
+  { label: "PostgreSQL", icon: "/tech_icon/postgre.png", colors: "#7dd3fc,#38bdf8,#0369a1" },
+  { label: "Ubuntu", icon: "/tech_icon/ubantu.png", colors: "#fdba74,#fb923c,#c2410c" },
+];
 
 export default function Skills() {
   const ref = useRef<HTMLElement>(null);
@@ -13,28 +32,16 @@ export default function Skills() {
     gsap.registerPlugin(ScrollTrigger);
     const ctx = gsap.context(() => {
       gsap.fromTo(
-        ".skill-card",
-        { opacity: 0, y: 70, rotateX: -8 },
+        ".tech-card",
+        { opacity: 0, y: 50, scale: 0.94 },
         {
           opacity: 1,
           y: 0,
-          rotateX: 0,
-          duration: 0.85,
-          stagger: 0.14,
-          ease: "power3.out",
-          scrollTrigger: { trigger: ref.current, start: "top 72%" },
-        }
-      );
-      gsap.fromTo(
-        ".skill-chip",
-        { opacity: 0, scale: 0.6 },
-        {
-          opacity: 1,
           scale: 1,
-          duration: 0.45,
-          ease: "back.out(2)",
-          stagger: { each: 0.04 },
-          scrollTrigger: { trigger: ".skill-grid", start: "center 75%" },
+          duration: 0.7,
+          stagger: 0.06,
+          ease: "power3.out",
+          scrollTrigger: { trigger: ref.current, start: "top 75%" },
         }
       );
     }, ref);
@@ -49,36 +56,33 @@ export default function Skills() {
           title="SKILLS & STACK"
           accent="STACK"
         />
-        <div className="skill-grid grid gap-6 md:grid-cols-3" style={{ perspective: "900px" }}>
-          {SKILLS.map((group) => (
-            <div
-              key={group.group}
-              className="skill-card group relative overflow-hidden rounded-2xl border border-line bg-panel2 p-8 transition-colors duration-500 hover:border-transparent"
+        {/* <p className="mb-12 -mt-6 font-mono text-xs uppercase tracking-[0.3em] text-muted">
+          {"// hover the cards"}
+        </p> */}
 
+        <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
+          {TECH_STACK.map((tech, i) => (
+            <PixelCard
+              key={tech.label}
+              colors={tech.colors}
+              gap={5}
+              speed={35}
+              className="tech-card tech-pixel-card cursor-pointer"
             >
-              <div
-                className="absolute inset-x-0 top-0 h-1 opacity-80"
-                style={{ background: group.accent }}
-              />
-              <div
-                className="pointer-events-none absolute -right-16 -top-16 h-44 w-44 rounded-full opacity-[0.07] blur-2xl transition-opacity duration-500 group-hover:opacity-20"
-                style={{ background: group.accent }}
-              />
-              <h3 className="font-display text-2xl font-bold">{group.group}</h3>
-              <p className="mt-1 font-mono text-xs uppercase tracking-widest text-muted">
-                / {group.items.length} tools
-              </p>
-              <ul className="mt-7 flex flex-wrap gap-2.5">
-                {group.items.map((item) => (
-                  <li
-                    key={item}
-                    className="skill-chip rounded-full border border-line px-3.5 py-1.5 text-sm text-cream/85 transition-colors duration-300 hover:border-lime hover:text-lime-bright"
-                  >
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
+              <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 px-4 text-center">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={tech.icon}
+                  alt={tech.label}
+                  loading="lazy"
+                  style={{ animationDelay: `${i * 0.18}s` }}
+                  className="tech-icon-float h-35 w-35 object-contain drop-shadow-[0_0_20px_rgba(59,130,246,0.35)]"
+                />
+                <span className="font-mono text-[11px] uppercase tracking-widest text-cream">
+                  {tech.label}
+                </span>
+              </div>
+            </PixelCard>
           ))}
         </div>
       </div>

@@ -255,28 +255,33 @@ export default function Contact() {
                 />
               </label>
 
-              <button
-                type="submit"
-                disabled={status === "sending"}
-
-                className="liquid-glass-accent group relative flex w-full items-center justify-center gap-3 overflow-hidden rounded-xl py-4 font-mono text-sm font-medium uppercase tracking-widest text-cream transition-all duration-300 hover:brightness-110 disabled:opacity-60"
-              >
-                {status === "sending" ? (
-                  <>
-                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-cream/30 border-t-cream" />
-                    Sending…
-                  </>
-                ) : status === "success" ? (
-                  <>
-                    Message Sent ✓
-                  </>
-                ) : (
-                  <>
-                    Send Message
-                    <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-                  </>
-                )}
-              </button>
+              <span className="star-border-container block w-full rounded-xl">
+                <span className="star-ring" aria-hidden>
+                  <div className="border-gradient-bottom" style={{ background: "radial-gradient(circle, #93c5fd, transparent 10%)" }} />
+                  <div className="border-gradient-top" style={{ background: "radial-gradient(circle, #93c5fd, transparent 10%)" }} />
+                </span>
+                <button
+                  type="submit"
+                  disabled={status === "sending"}
+                  className="star-inner liquid-glass-accent group relative flex w-full items-center justify-center gap-3 overflow-hidden rounded-xl py-4 font-mono text-sm font-medium uppercase tracking-widest text-cream transition-all duration-300 hover:brightness-110 disabled:opacity-60"
+                >
+                  {status === "sending" ? (
+                    <>
+                      <span className="h-4 w-4 animate-spin rounded-full border-2 border-cream/30 border-t-cream" />
+                      Sending…
+                    </>
+                  ) : status === "success" ? (
+                    <>
+                      Message Sent ✓
+                    </>
+                  ) : (
+                    <>
+                      Send Message
+                      <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                    </>
+                  )}
+                </button>
+              </span>
 
               {status === "error" && (
                 <p className="rounded-xl border border-red/30 bg-red/10 px-4 py-3 text-sm text-red">

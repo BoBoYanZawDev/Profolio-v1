@@ -71,6 +71,78 @@ function sliceLine(tokens: Token[], count: number): Token[] {
   return out;
 }
 
+function StrokeLine({ text, filled = true }: { text: string; filled?: boolean }) {
+  const textRef = useRef<SVGTextElement>(null);
+  const [vb, setVb] = useState("");
+  const [widthPct, setWidthPct] = useState(100);
+
+  useEffect(() => {
+    const measure = () => {
+      const el = textRef.current;
+      if (!el) return;
+      try {
+        const bb = el.getBBox();
+        if (!bb.width || !bb.height) return;
+        setVb(`${bb.x - 5} ${bb.y - 5} ${bb.width + 10} ${bb.height + 10}`);
+        const cw = el.ownerSVGElement?.parentElement?.clientWidth ?? 0;
+        if (cw > 0) {
+          // never scale glyphs up more than ~12% — just a slight stretch
+          setWidthPct(Math.min(100, ((bb.width * 1.12) / cw) * 100));
+        }
+      } catch {
+        /* noop */
+      }
+    };
+    measure();
+    document.fonts?.ready.then(measure);
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, [text, filled]);
+
+  const isDotted = !filled && text.endsWith(".");
+  const body = isDotted ? text.slice(0, -1) : text;
+
+  return (
+    <svg
+      viewBox={vb || "0 10 1000 77"}
+      style={{ width: `${widthPct}%` }}
+      className={`block transition-opacity duration-300 ${vb ? "opacity-100" : "opacity-0"}`}
+      role="img"
+      aria-label={text}
+    >
+      {/* base layer */}
+      <text
+        ref={textRef}
+        y="86"
+        fontSize="108"
+        fontWeight={800}
+        className="font-display"
+        fill={filled ? "var(--color-cream)" : "none"}
+        stroke={filled ? "none" : "rgba(242,239,233,0.3)"}
+        strokeWidth={filled ? 0 : 1.5}
+      >
+        {body}
+        {isDotted && <tspan fill="var(--color-lime)">.</tspan>}
+      </text>
+      {/* animated draw stroke */}
+      <text
+        y="86"
+        fontSize="108"
+        fontWeight={800}
+        className="font-display hl-stroke"
+        fill="none"
+        stroke="var(--color-lime)"
+        strokeWidth="2.5"
+        strokeDasharray="3000"
+        strokeDashoffset="3000"
+        aria-hidden
+      >
+        {text}
+      </text>
+    </svg>
+  );
+}
+
 const BADGES = [
   {
     label: "React",
@@ -147,17 +219,10 @@ export default function Hero() {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
       tl.fromTo(
-        ".hl-char",
-        { yPercent: 130, rotate: 10, opacity: 0 },
-        {
-          yPercent: 0,
-          rotate: 0,
-          opacity: 1,
-          duration: 1,
-          ease: "back.out(1.7)",
-          stagger: 0.045,
-        },
-        0.2
+        ".hl-line svg",
+        { yPercent: 130 },
+        { yPercent: 0, duration: 1, stagger: 0.12 },
+        0.15
       )
         .fromTo(
           ".hero-el",
@@ -213,12 +278,6 @@ export default function Hero() {
     });
   }, [typed]);
 
-  // cursor sits on the line currently being typed (not the bottom of the file)
-  const cursorLine = rendered.reduce(
-    (acc, line, i) => (line.some((t) => t.t.length > 0) ? i : acc),
-    0
-  );
-
   return (
     <section id="top" ref={rootRef} className="relative overflow-hidden">
       {/* video disc centered behind the wire sphere */}
@@ -262,35 +321,13 @@ export default function Hero() {
             {"// hi, I'm Bo Bo Yan Zaw"}
           </p>
 
-          <h1 className="font-display text-[clamp(2.4rem,7.2vw,5.8rem)] font-extrabold leading-[1.02] tracking-tight">
-            <span className="block overflow-hidden pb-1 hl-line">
-              <span className="whitespace-nowrap">
-                {"FULL—STACK".split("").map((c, i) => (
-                  <span
-                    key={i}
-                    className="hl-char inline-block will-change-transform"
-                  >
-                    {c}
-                  </span>
-                ))}
-              </span>
-            </span>
-            <span className="block overflow-hidden pb-2 hl-line">
-              <span className="whitespace-nowrap">
-                {"DEVELOPER".split("").map((c, i) => (
-                  <span
-                    key={i}
-                    className="hl-char hl-char-outline inline-block will-change-transform"
-                  >
-                    {c}
-                  </span>
-                ))}
-                <span
-                  key="dot"
-                  className="hl-char ml-[0.12em] inline-block h-[0.16em] w-[0.16em] rounded-full bg-lime-bright"
-                />
-              </span>
-            </span>
+          <h1 aria-label="Full-Stack Developer">
+            <div className="hl-line overflow-hidden">
+              <StrokeLine text="FULL—STACK" filled />
+            </div>
+            <div className="hl-line overflow-hidden">
+              <StrokeLine text="DEVELOPER." filled={false} />
+            </div>
           </h1>
 
           <p className="hero-el mt-6 max-w-md text-base leading-relaxed text-muted md:text-lg">
@@ -302,33 +339,23 @@ export default function Hero() {
 
           <div className="hero-el mt-9 flex flex-wrap items-center gap-4">
             <Magnetic strength={0.25}>
-              <span className="star-border-container rounded-full">
-                <span className="star-ring" aria-hidden>
-                  <div className="border-gradient-bottom" style={{ background: "radial-gradient(circle, #93c5fd, transparent 10%)" }} />
-                  <div className="border-gradient-top" style={{ background: "radial-gradient(circle, #93c5fd, transparent 10%)" }} />
-                </span>
-                <a
-                  href="#work"
-                  className="star-inner liquid-glass-accent group inline-flex items-center gap-2 rounded-full px-7 py-3.5 font-mono text-sm font-medium uppercase tracking-widest text-cream transition-all duration-300 hover:brightness-125"
-                >
-                  View My Work
-                  <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-                </a>
-              </span>
+              <a
+                href="#work"
+
+                className="liquid-glass-accent group inline-flex items-center gap-2 rounded-full px-7 py-3.5 font-mono text-sm font-medium uppercase tracking-widest text-cream transition-all duration-300 hover:brightness-125"
+              >
+                View My Work
+                <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+              </a>
             </Magnetic>
             <Magnetic strength={0.25}>
-              <span className="star-border-container rounded-full">
-                <span className="star-ring" aria-hidden>
-                  <div className="border-gradient-bottom" style={{ background: "radial-gradient(circle, #93c5fd, transparent 10%)" }} />
-                  <div className="border-gradient-top" style={{ background: "radial-gradient(circle, #93c5fd, transparent 10%)" }} />
-                </span>
-                <a
-                  href="#contact"
-                  className="star-inner liquid-glass inline-flex items-center rounded-full px-7 py-3.5 font-mono text-sm font-medium uppercase tracking-widest text-cream transition-all duration-300 hover:brightness-125"
-                >
-                  Get In Touch
-                </a>
-              </span>
+              <a
+                href="#contact"
+
+                className="liquid-glass rounded-full px-7 py-3.5 font-mono text-sm uppercase tracking-widest text-cream transition-all duration-300 hover:brightness-125"
+              >
+                Get In Touch
+              </a>
             </Magnetic>
           </div>
 
@@ -377,7 +404,7 @@ export default function Hero() {
                         {tok.t}
                       </span>
                     ))}
-                    {i === cursorLine && loaded && (
+                    {i === rendered.length - 1 && loaded && (
                       <span className="ml-0.5 inline-block h-4 w-2 animate-pulse bg-lime align-middle" />
                     )}
                   </code>
